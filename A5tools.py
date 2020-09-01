@@ -302,7 +302,7 @@ def N_inc(q, n):
 
     Arguments
     ---------
-    q: value of current digityzer in units of e
+    q: value of current digityzer in units of 1.0E-10[C]
     n: charge of incident particle in units of e
 
     Return
