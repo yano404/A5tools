@@ -32,6 +32,15 @@ class correct:
             self.uncertain = False
 
     def D(self, a):
+        """
+        Arguments
+        ---------
+        a : angle of rotation
+
+        Return
+        ------
+        D : distance between target and detector
+        """
         Rd = self.R + self.d
         r = self.r
         AT = self.AT
@@ -41,6 +50,15 @@ class correct:
             return unp.sqrt(Rd**2.0 + r**2.0 - 2.0 * Rd * r * unp.cos(a + AT))
 
     def theta(self, a):
+        """
+        Arguments
+        ---------
+        a : angle of rotation
+
+        Return
+        ------
+        θ : scattering angle in the lab system
+        """
         D0 = self.D(0.0)
         D = self.D(a)
         Rd = self.R + self.d
@@ -56,6 +74,15 @@ class correct:
             )
 
     def dS(self, a):
+        """
+        Arguments
+        ---------
+        a : angle of rotation
+
+        Return
+        ------
+        ΔS : detection area
+        """
         Rd = self.R + self.d
         r = self.r
         AT = self.AT
@@ -73,4 +100,13 @@ class correct:
             return w * h * unp.cos(phi) - d * h * unp.sin(phi)
 
     def dOmega(self, a):
+        """
+        Arguments
+        ---------
+        a : angle of rotation
+
+        Return
+        ------
+        ΔΩ : solid angle of detector
+        """
         return self.dS(a) / self.D(a)**2.0
