@@ -39,7 +39,7 @@ def bethe(z, a, Z, A, Ei):
     # eta
     eta = beta * gamma
     # wmax
-    s = MEC2 / a / AMU
+    s = MEC2 / (a * AMU)
     wmax = (2.0 * MEC2 * eta**2.0) / \
         (1.0 + 2.0 * s * np.sqrt(1.0 + eta**2.0) + s**2.0)
     # I
