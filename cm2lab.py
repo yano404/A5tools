@@ -4,8 +4,8 @@ functions to convert the center-of-mass system to the lab system
 
 import numpy as np
 import uncertainties
-import uncertainties.unumpy as unp
 from uncertainties import umath
+import uncertainties.unumpy as unp
 from .constants import *
 
 

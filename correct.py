@@ -8,17 +8,17 @@ functions to correct
 
 import numpy as np
 import uncertainties
+from uncertainties import umath
 import uncertainties.unumpy as unp
-import uncertainties.unumpy as umath
 
 
 class correct:
     def __init__(self, R, r, AT, d, w, h):
         """
-        R     : radius of rotation
-        r     : distance between target and the center of rotation
-        AT    : α_t the angle between α=0 and target
-        d,w,h : depth, width, height of slit immplemented on detector
+        R     : radius of rotation [mm]
+        r     : distance between target and the center of rotation [mm]
+        AT    : α_t the angle between α=0 and target [rad]
+        d,w,h : depth, width, height of slit immplemented on detector [mm]
         """
         self.R = R
         self.r = r
@@ -35,11 +35,11 @@ class correct:
         """
         Arguments
         ---------
-        a : angle of rotation
+        a : angle of rotation [rad]
 
         Return
         ------
-        D : distance between target and detector
+        D : distance between target and detector [mm]
         """
         Rd = self.R + self.d
         r = self.r
@@ -53,11 +53,11 @@ class correct:
         """
         Arguments
         ---------
-        a : angle of rotation
+        a : angle of rotation [rad]
 
         Return
         ------
-        θ : scattering angle in the lab system
+        θ : scattering angle in the lab system [rad]
         """
         D0 = self.D(0.0)
         D = self.D(a)
@@ -77,11 +77,11 @@ class correct:
         """
         Arguments
         ---------
-        a : angle of rotation
+        a : angle of rotation [rad]
 
         Return
         ------
-        ΔS : detection area
+        ΔS : detection area [mm^2]
         """
         Rd = self.R + self.d
         r = self.r
@@ -103,10 +103,10 @@ class correct:
         """
         Arguments
         ---------
-        a : angle of rotation
+        a : angle of rotation [rad]
 
         Return
         ------
-        ΔΩ : solid angle of detector
+        ΔΩ : solid angle of detector [str]
         """
         return self.dS(a) / self.D(a)**2.0
