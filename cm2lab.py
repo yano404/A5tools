@@ -26,9 +26,9 @@ def theta(theta_cm, n):
     ------
     This function does not consider relativity
     """
-    if isinstance(theta_cm, uncertainties.core.Variable):
+    if isinstance(theta_cm, uncertainties.core.AffineScalarFunc):
         return umath.arctan(umath.sin(theta_cm) / (1.0 / n + umath.cos(theta_cm)))
-    elif isinstance(theta_cm, np.ndarray) and isinstance(theta_cm[0], uncertainties.core.Variable):
+    elif isinstance(theta_cm, np.ndarray) and isinstance(theta_cm[0], uncertainties.core.AffineScalarFunc):
         return unp.arctan(unp.sin(theta_cm) / (1.0 / n + unp.cos(theta_cm)))
     else:
         return np.arctan(np.sin(theta_cm) / (1.0 / n + np.cos(theta_cm)))
@@ -53,10 +53,10 @@ def dOmega(theta_cm, n):
     ------
     This function does not consider relativity
     """
-    if isinstance(theta_cm, uncertainties.core.Variable):
+    if isinstance(theta_cm, uncertainties.core.AffineScalarFunc):
         return umath.pow(1.0 + 2.0 * umath.cos(theta_cm) / n + 1.0 / n**2.0, 3 / 2) \
             / (1.0 + umath.cos(theta_cm) / n)
-    elif isinstance(theta_cm, np.ndarray) and isinstance(theta_cm, uncertainties.core.Variable):
+    elif isinstance(theta_cm, np.ndarray) and isinstance(theta_cm[0], uncertainties.core.AffineScalarFunc):
         return unp.pow(1.0 + 2.0 * unp.cos(theta_cm) / n + 1.0 / n**2.0, 3 / 2) \
             / (1.0 + unp.cos(theta_cm) / n)
     else:

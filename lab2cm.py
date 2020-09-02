@@ -26,13 +26,13 @@ def theta(theta_lab, n):
     ------
     This function do not consider relativity
     """
-    if isinstance(theta_lab, uncertainties.core.Variable):
+    if isinstance(theta_lab, uncertainties.core.AffineScalarFunc):
         coslab2 = umath.pow(umath.cos(theta_lab), 2.0)
         coscm = (coslab2 - 1.0) / n \
             + umath.sqrt((1.0 - 1.0 / n**2.0) * coslab2 +
                          umath.pow(coslab2 / n, 2.0))
         return np.sign(theta_lab) * umath.acos(coscm)
-    elif isinstance(theta_lab, np.ndarray) and isinstance(theta_lab, uncertainties.core.Variable):
+    elif isinstance(theta_lab, np.ndarray) and isinstance(theta_lab[0], uncertainties.core.AffineScalarFunc):
         coslab2 = unp.pow(unp.cos(theta_lab), 2.0)
         coscm = (coslab2 - 1.0) / n \
             + unp.sqrt((1.0 - 1.0 / n**2.0) * coslab2 +
@@ -65,13 +65,13 @@ def dOmega(theta_lab, n):
     ------
     This function do not consider relativity
     """
-    if isinstance(theta_lab, uncertainties.core.Variable):
+    if isinstance(theta_lab, uncertainties.core.AffineScalarFunc):
         return umath.pow(
             2.0 * umath.cos(theta_lab) / n
             + (1.0 + umath.cos(2.0 * theta_lab) / (n**2.0))
             / umath.sqrt(1.0 - umath.pow(umath.sin(theta_lab) / n, 2.0)), -1.0
         )
-    elif isinstance(theta_lab, np.ndarray) and isinstance(theta_lab, uncertainties.core.Variable):
+    elif isinstance(theta_lab, np.ndarray) and isinstance(theta_lab[0], uncertainties.core.AffineScalarFunc):
         return unp.pow(
             2.0 * unp.cos(theta_lab) / n
             + (1.0 + unp.cos(2.0 * theta_lab) / (n**2.0))

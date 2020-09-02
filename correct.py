@@ -44,10 +44,13 @@ class correct:
         Rd = self.R + self.d
         r = self.r
         AT = self.AT
-        if isinstance(a, uncertainties.core.Variable):
+        if isinstance(a, (int, float, np.number, uncertainties.core.AffineScalarFunc)):
             return umath.sqrt(Rd**2.0 + r**2.0 - 2.0 * Rd * r * umath.cos(a + AT))
-        else:
+        elif isinstance(a, np.ndarray):
             return unp.sqrt(Rd**2.0 + r**2.0 - 2.0 * Rd * r * unp.cos(a + AT))
+        else:
+            raise ValueError(
+                f"This function not supported for the input types. argument 'a' must be number or array")
 
     def theta(self, a):
         """
@@ -62,16 +65,19 @@ class correct:
         D0 = self.D(0.0)
         D = self.D(a)
         Rd = self.R + self.d
-        if isinstance(a, uncertainties.core.Variable):
+        if isinstance(a, (int, float, np.number, uncertainties.core.AffineScalarFunc)):
             return np.sign(a) * umath.acos(
                 (D0**2.0 + D**2.0 - 2.0 * Rd**2.0 *
                  (1.0 - umath.cos(a))) / (2.0 * D0 * D)
             )
-        else:
+        elif isinstance(a, np.ndarray):
             return np.sign(a) * unp.arccos(
                 (D0**2.0 + D**2.0 - 2.0 * Rd**2.0 *
                  (1.0 - unp.cos(a))) / (2.0 * D0 * D)
             )
+        else:
+            raise ValueError(
+                f"This function not supported for the input types. argument 'a' must be number or array")
 
     def dS(self, a):
         """
@@ -91,13 +97,16 @@ class correct:
         d = self.d
         w = self.w
         h = self.h
-        if isinstance(a, uncertainties.core.Variable):
+        if isinstance(a, (int, float, np.number, uncertainties.core.AffineScalarFunc)):
             phi = umath.fabs(a - A0 - self.theta(a))
             # ΔS
             return w * h * umath.cos(phi) - d * h * umath.sin(phi)
-        else:
+        elif isinstance(a, np.ndarray):
             phi = unp.fabs(a - A0 - self.theta(a))
             return w * h * unp.cos(phi) - d * h * unp.sin(phi)
+        else:
+            raise ValueError(
+                f"This function not supported for the input types. argument 'a' must be number or array")
 
     def dOmega(self, a):
         """
