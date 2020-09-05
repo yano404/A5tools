@@ -135,7 +135,7 @@ Find experimental value of differential cross-section in the center-of-mass syst
 import A5tools
 """
 load data
-data type is number, numpy.ndarray or uncertainties.uncertainties.core.AffineScalarFunc
+data type is number, numpy.ndarray or uncertainties.core.AffineScalarFunc
  theta  : scattering angle in the lab system
  Ni     : number of incident particles
  Ns     : number pf scattering particles
