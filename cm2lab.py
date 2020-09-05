@@ -45,9 +45,7 @@ def dOmega(theta_cm, n):
 
     Return
     ------
-      dΩcm
-     -------- : factor to convert differential cross-section in the center-of-mass system to one in the lab system
-      dΩlab
+      dΩcm/dΩlab : factor to convert differential cross-section in the center-of-mass system to one in the lab system
 
     Notice
     ------
