@@ -3,6 +3,9 @@ functions to find theoretical value of differential cross-section
 """
 
 import numpy as np
+import uncertainties
+from uncertainties import umath
+import uncertainties.unumpy as unp
 from .constants import *
 from . import cm2lab
 from . import lab2cm
@@ -30,14 +33,31 @@ def rutherford(theta, T, Zi, Zt, which="inc"):
     # 10.0 : fm^2 --> mb
     if which == "inc":
         # incident particle
-        return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * np.power(np.sin(theta / 2.0), -4.0)
+        if isinstance(theta, uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * umath.pow(umath.sin(theta / 2.0), -4.0)
+        elif isinstance(theta, np.ndarray) and isinstance(theta[0], uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * unp.pow(unp.sin(theta / 2.0), -4.0)
+        else:
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * np.power(np.sin(theta / 2.0), -4.0)
     elif which == "tar":
         # target particle
-        return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * np.power(np.cos(theta / 2.0), -4.0)
+        if isinstance(theta, uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * umath.pow(umath.cos(theta / 2.0), -4.0)
+        elif isinstance(theta, np.ndarray) and isinstance(theta[0], uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * unp.pow(unp.cos(theta / 2.0), -4.0)
+        else:
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 * np.power(np.cos(theta / 2.0), -4.0)
     elif which == "sum":
         # incident particle + target particle
-        return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 \
-            * (np.power(np.sin(theta / 2.0), -4.0) + np.power(np.cos(theta / 2.0), -4.0))
+        if isinstance(theta, uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 \
+                * (umath.pow(umath.sin(theta / 2.0), -4.0) + umath.pow(umath.cos(theta / 2.0), -4.0))
+        elif isinstance(theta, np.ndarray) and isinstance(theta[0], uncertainties.core.AffineScalarFunc):
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 \
+                * (unp.pow(unp.sin(theta / 2.0), -4.0) + unp.power(unp.cos(theta / 2.0), -4.0))
+        else:
+            return 10.0 * (Zi * Zt * E2 / (4.0 * T))**2.0 \
+                * (np.power(np.sin(theta / 2.0), -4.0) + np.power(np.cos(theta / 2.0), -4.0))
     else:
         raise ValueError(
             f"Unrecognized which option:{which}. which must be inc/tar/sum.")
@@ -134,16 +154,39 @@ def mott(theta, T, Z, A, S):
 
     # dσ/dΩ[mb/str]
     # 10.0 : fm^2 --> mb
-    return 10.0 * (Z**2 * E2 / (4.0 * T))**2.0 * (
-        np.power(np.sin(theta / 2.0), -4.0)
-        + np.power(np.cos(theta / 2.0), -4.0)
-        + (-1.0)**(2.0 * S) * 2.0 / (2.0 * S + 1.0) *
-        np.power(np.sin(theta / 2.0), -2.0) *
-        np.power(np.cos(theta / 2.0), -2.0) *
-        np.cos(Z**2.0 * E2 / (HBARC * brel) *
-               np.log(np.power(np.tan(theta / 2.0), 2.0))
-               )
-    )
+    if isinstance(theta, uncertainties.core.AffineScalarFunc):
+        return 10.0 * (Z**2 * E2 / (4.0 * T))**2.0 * (
+            umath.pow(umath.sin(theta / 2.0), -4.0)
+            + umath.pow(umath.cos(theta / 2.0), -4.0)
+            + (-1.0)**(2.0 * S) * 2.0 / (2.0 * S + 1.0) *
+            umath.pow(umath.sin(theta / 2.0), -2.0) *
+            umath.pow(umath.cos(theta / 2.0), -2.0) *
+            umath.cos(Z**2.0 * E2 / (HBARC * brel) *
+                      umath.log(umath.pow(umath.tan(theta / 2.0), 2.0))
+                      )
+        )
+    elif isinstance(theta, np.ndarray) and isinstance(theta[0], uncertainties.core.AffineScalarFunc):
+        return 10.0 * (Z**2 * E2 / (4.0 * T))**2.0 * (
+            unp.pow(unp.sin(theta / 2.0), -4.0)
+            + unp.pow(unp.cos(theta / 2.0), -4.0)
+            + (-1.0)**(2.0 * S) * 2.0 / (2.0 * S + 1.0) *
+            unp.pow(unp.sin(theta / 2.0), -2.0) *
+            unp.pow(unp.cos(theta / 2.0), -2.0) *
+            unp.cos(Z**2.0 * E2 / (HBARC * brel) *
+                    unp.log(unp.pow(unp.tan(theta / 2.0), 2.0))
+                    )
+        )
+    else:
+        return 10.0 * (Z**2 * E2 / (4.0 * T))**2.0 * (
+            np.power(np.sin(theta / 2.0), -4.0)
+            + np.power(np.cos(theta / 2.0), -4.0)
+            + (-1.0)**(2.0 * S) * 2.0 / (2.0 * S + 1.0) *
+            np.power(np.sin(theta / 2.0), -2.0) *
+            np.power(np.cos(theta / 2.0), -2.0) *
+            np.cos(Z**2.0 * E2 / (HBARC * brel) *
+                   np.log(np.power(np.tan(theta / 2.0), 2.0))
+                   )
+        )
 
 
 def mott_lab(theta, T, Z, A, S):
