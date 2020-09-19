@@ -129,7 +129,7 @@ plt.show()
 </details>
 
 ### Experimental value of differential cross-section
-Find experimental value of differential cross-section in the center-of-mass system.
+Find experimental value of differential cross-section.
 
 ```python
 import A5tools
