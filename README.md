@@ -154,4 +154,5 @@ heta_cm = lab2cm.theta(theta, At/Ai)
 
 ## License
 Copyright (c) 2020 Takayuki YANO
+
 The source code is licensed under the MIT License, see LICENSE.
