@@ -149,7 +149,7 @@ dslab = A5tools.dslab(Ni, Ns, n, dOmega)
 # differential cross-section in the CM system
 dscm = lab2cm.dOmega(theta, At/Ai) * dslab
 # scattering angle in the CM system
-heta_cm = lab2cm.theta(theta, At/Ai)
+theta_cm = lab2cm.theta(theta, At/Ai)
 ```
 
 ## License
