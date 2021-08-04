@@ -46,7 +46,7 @@ def bethe(z, a, Z, A, Ei):
     if Z < 13:
         I = (12 * Z + 7) * 1E-6  # [MeV]
     else:
-        I = (9.76 * Z + 58.8 * np.pow(Z, -0.19)) * 1E-6  # [MeV]
+        I = (9.76 * Z + 58.8 * np.power(Z, -0.19)) * 1E-6  # [MeV]
     # return -dE/d(ρx)
     return - const * (Z / A) \
         * (z**2.0 / beta**2.0) \
